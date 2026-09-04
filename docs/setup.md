@@ -85,7 +85,7 @@ You can change the model later on any LLM node in Advanced mode.
 ## Vercel deploy
 
 1. Push this repo to GitHub. In Vercel: **Add New Project** → import the repo.
-2. Framework: Next.js. Build command is already `pnpm build:vercel` via `vercel.json` (Prisma generate + migrate + Next build).
+2. Framework: Next.js. Build command is already `pnpm build:vercel` via `vercel.json` (Prisma generate + migrate + Next build). `output: "standalone"` is for Docker only — Vercel must not use it on Next 16.3 (missing `next-server.js.nft.json`).
 3. Generate the import file:
 
 ```bash
