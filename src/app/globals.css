@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f3eee4;
+  --bg-elevated: #fffdf8;
+  --ink: #1b1713;
+  --muted: #6b6156;
+  --line: #e4d8c6;
+  --accent: #c2410c;
+  --accent-ink: #fff7ed;
+  --forest: #1f4d3a;
+  --good: #1f7a4d;
+  --warn: #b45309;
+  --bad: #b42318;
+  --shadow: 0 18px 50px rgba(60, 40, 20, 0.08);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-forest: var(--forest);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  min-height: 100%;
+}
+
+.display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+}
+
+.paper {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow);
+}
+
+.grain {
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(194, 65, 12, 0.08), transparent 34%),
+    radial-gradient(circle at 90% 10%, rgba(31, 77, 58, 0.08), transparent 28%);
+}

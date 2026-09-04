@@ -1,0 +1,63 @@
+{
+  "name": "LinkedIn Autopilot",
+  "version": 1,
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 9 * * 1-5"
+  },
+  "steps": [
+    {
+      "id": "research",
+      "type": "research",
+      "name": "Research",
+      "config": {
+        "topics": "AI engineering, startups, programming, SaaS"
+      }
+    },
+    {
+      "id": "write",
+      "type": "llm",
+      "name": "Write post",
+      "config": {
+        "model": "openrouter/free",
+        "system": "You are an expert LinkedIn writer. Write like an experienced software engineer. Don't sound like AI. Use practical examples.",
+        "user": "Write a LinkedIn post about {{research.topic}}.\n\nResearch notes:\n{{research.notes}}"
+      }
+    },
+    {
+      "id": "risk",
+      "type": "risk_check",
+      "name": "Risk check",
+      "config": {
+        "content": "{{write}}"
+      }
+    },
+    {
+      "id": "branch",
+      "type": "condition",
+      "name": "Risk branch",
+      "next": {
+        "expression": "risk.level == \"HIGH\"",
+        "then": "approval",
+        "else": "publish"
+      }
+    },
+    {
+      "id": "approval",
+      "type": "approval",
+      "name": "Human approval",
+      "config": {
+        "content": "{{write}}"
+      },
+      "next": "publish"
+    },
+    {
+      "id": "publish",
+      "type": "linkedin",
+      "name": "LinkedIn Publish",
+      "config": {
+        "content": "{{write}}"
+      }
+    }
+  ]
+}

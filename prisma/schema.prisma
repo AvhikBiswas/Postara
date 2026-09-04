@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                   String    @id @default(cuid())
+  name                 String
+  email                String    @unique
+  passwordHash         String
+  role                 String    @default("USER")
+  plan                 String    @default("free")
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripeStatus         String?
+  image                String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  secrets              Secret[]
+  workflows            Workflow[]
+  executions           Execution[]
+  approvals            Approval[]
+  connections          Connection[]
+  auditLogs            AuditLog[]
+  posts                Post[]
+}
+
+model Secret {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider       String
+  name           String
+  encryptedValue String
+  metadata       String   @default("{}")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, provider, name])
+  @@index([userId, provider])
+}
+
+model Connection {
+  id                     String    @id @default(cuid())
+  userId                 String
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider               String
+  providerAccountId      String?
+  displayName            String?
+  encryptedAccessToken   String
+  encryptedRefreshToken  String?
+  expiresAt              DateTime?
+  scopes                 String?
+  metadata               String    @default("{}")
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@unique([userId, provider])
+}
+
+model Workflow {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String      @default("")
+  definition  String
+  status      String      @default("draft")
+  kind        String      @default("custom")
+  nextRunAt   DateTime?
+  lastRunAt   DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  executions  Execution[]
+
+  @@index([userId, status])
+  @@index([status, nextRunAt])
+}
+
+model Execution {
+  id         String           @id @default(cuid())
+  publicId   String           @unique
+  workflowId String
+  workflow   Workflow         @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status     String           @default("PENDING")
+  trigger    String           @default("manual")
+  context    String           @default("{}")
+  error      String?
+  startedAt  DateTime?
+  finishedAt DateTime?
+  createdAt  DateTime         @default(now())
+  nodes      ExecutionNode[]
+  events     ExecutionEvent[]
+  approvals  Approval[]
+  posts      Post[]
+
+  @@index([userId, createdAt])
+  @@index([workflowId, createdAt])
+  @@index([status])
+}
+
+model ExecutionNode {
+  id          String     @id @default(cuid())
+  executionId String
+  execution   Execution  @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  stepId      String
+  type        String
+  name        String
+  status      String     @default("PENDING")
+  input       String     @default("{}")
+  output      String     @default("{}")
+  error       String?
+  model       String?
+  tokensIn    Int        @default(0)
+  tokensOut   Int        @default(0)
+  costUsd     Float      @default(0)
+  durationMs  Int        @default(0)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  sortOrder   Int
+
+  @@index([executionId, sortOrder])
+}
+
+model ExecutionEvent {
+  id          String    @id @default(cuid())
+  executionId String
+  execution   Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  type        String
+  message     String
+  data        String    @default("{}")
+  createdAt   DateTime  @default(now())
+
+  @@index([executionId, createdAt])
+}
+
+model Approval {
+  id            String    @id @default(cuid())
+  executionId   String
+  execution     Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nodeId        String
+  tokenHash     String    @unique
+  status        String    @default("pending")
+  riskLevel     String
+  riskReason    String
+  content       String
+  editedContent String?
+  expiresAt     DateTime
+  decidedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([userId, status])
+}
+
+model Post {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  executionId  String?
+  execution    Execution? @relation(fields: [executionId], references: [id], onDelete: SetNull)
+  platform     String     @default("linkedin")
+  content      String
+  status       String
+  publishedAt  DateTime?
+  scheduledFor DateTime?
+  externalId   String?
+  createdAt    DateTime   @default(now())
+
+  @@index([userId, createdAt])
+  @@index([status])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  target    String?
+  metadata  String   @default("{}")
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}

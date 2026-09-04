@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm build:vercel",
+  "crons": [
+    {
+      "path": "/api/cron/tick",
+      "schedule": "0 * * * *"
+    }
+  ]
+}
