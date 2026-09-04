@@ -30,6 +30,14 @@ export function frequencyToCron(frequency: string, time: string) {
   }
 }
 
+/** Vercel Hobby only allows schedules that fire at most once per day. */
+export function isHobbyCompatibleCron(schedule: string) {
+  const parts = schedule.trim().split(/\s+/);
+  if (parts.length < 5) return false;
+  const [minute, hour] = parts;
+  return /^\d+$/.test(minute) && /^\d+$/.test(hour);
+}
+
 export function describeCron(cron: string) {
   const parts = cron.split(" ");
   if (parts.length < 5) return cron;

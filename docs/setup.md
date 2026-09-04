@@ -104,7 +104,7 @@ APP_URL=https://YOUR_PROJECT.vercel.app pnpm env:vercel
 9. LinkedIn Developers → your app → **Auth** → upload **`public/logo.png`** as the app logo. That is the mark users see when they authorize Postara.
 10. Sign in. Walk `/tour`.
 
-Hourly Autopilot: `vercel.json` cron `0 * * * *` → `/api/cron/tick`. Vercel sends `Authorization: Bearer $CRON_SECRET`. **Hobby** allows one cron per day — change the schedule to `0 9 * * *` if you are on Hobby.
+Scheduled Autopilot on **Hobby**: `vercel.json` cron `0 9 * * *` → `/api/cron/tick` (once a day, 09:00 UTC, Hobby’s maximum). Vercel sends `Authorization: Bearer $CRON_SECRET`. Default Autopilot time is 9:00 AM so the daily tick picks it up. Use **Run now** for an extra run the same day. Pro can switch the schedule to hourly if you upgrade.
 
 ## Local against the same Supabase project
 
