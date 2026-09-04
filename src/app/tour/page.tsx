@@ -15,7 +15,7 @@ const stops = [
   {
     href: "/automation",
     title: "Automation",
-    body: "Active or paused, next run, Run now. This is the operator console for LinkedIn Autopilot.",
+    body: "Active or paused, next run, Run now. Vercel Hobby ticks Autopilot once a day at 09:00 UTC; Run now fires a run immediately.",
   },
   {
     href: "/executions",
