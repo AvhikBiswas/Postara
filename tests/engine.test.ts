@@ -9,7 +9,8 @@ import { buildAutopilotDefinition } from "../src/lib/autopilot";
 import { signApprovalToken, verifyApprovalToken, approvalExpiry } from "../src/lib/approval-token";
 import { encryptSecret, decryptSecret } from "../src/lib/secrets";
 import { assertPublicHttpUrl } from "../src/lib/nodes/http-guard";
-import { frequencyToCron } from "../src/lib/cron";
+import { frequencyToCron, isHobbyCompatibleCron } from "../src/lib/cron";
+import vercelConfig from "../vercel.json";
 import type { ExecutionContext, ExecutionStatus, WorkflowDefinition } from "../src/lib/engine/types";
 
 function memoryStore(definition: WorkflowDefinition): EngineStore & { status: ExecutionStatus; context: ExecutionContext } {
@@ -160,5 +161,14 @@ describe("engine", () => {
 describe("cron helpers", () => {
   it("maps weekday 9am", () => {
     expect(frequencyToCron("every_weekday", "09:00 AM")).toBe("0 9 * * 1-5");
+  });
+
+  it("keeps the Vercel cron Hobby-safe (once per day)", () => {
+    expect(vercelConfig.crons).toHaveLength(1);
+    expect(vercelConfig.crons[0]?.path).toBe("/api/cron/tick");
+    expect(vercelConfig.crons[0]?.schedule).toBe("0 9 * * *");
+    expect(isHobbyCompatibleCron(vercelConfig.crons[0]!.schedule)).toBe(true);
+    expect(isHobbyCompatibleCron("0 * * * *")).toBe(false);
+    expect(isHobbyCompatibleCron("*/15 * * * *")).toBe(false);
   });
 });
