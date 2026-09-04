@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import { auth } from "@/lib/auth";
 
 const steps = [
@@ -16,7 +17,7 @@ export default async function HomePage() {
   return (
     <div className="grain min-h-screen">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6">
-        <span className="display text-3xl">POSTARA</span>
+        <BrandLogo size={40} />
         <div className="flex items-center gap-3">
           <Link href={session ? "/dashboard" : "/login"} className="text-sm text-muted hover:text-ink">
             {session ? "Dashboard" : "Sign in"}

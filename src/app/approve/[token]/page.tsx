@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { hashToken, verifyApprovalToken } from "@/lib/approval-token";
 import { ApprovalActions } from "@/components/approval-actions";
+import { BrandLogo } from "@/components/brand-logo";
 
 export default async function PublicApprovePage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
@@ -20,7 +21,7 @@ export default async function PublicApprovePage({ params }: { params: Promise<{ 
   return (
     <div className="grain flex min-h-screen items-center justify-center px-5 py-12">
       <div className="paper w-full max-w-2xl rounded-3xl border border-line p-8">
-        <p className="display text-3xl">Postara</p>
+        <BrandLogo />
         <h1 className="mt-3 text-2xl font-medium">Your LinkedIn post is waiting for approval.</h1>
         <div className="mt-6 rounded-2xl bg-bg p-5">
           <p className="whitespace-pre-wrap leading-7">{approval.content}</p>

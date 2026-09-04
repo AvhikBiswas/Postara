@@ -60,7 +60,13 @@ export function SettingsForms({
       </Card>
       <Card className="p-6">
         <h2 className="display text-3xl">LinkedIn</h2>
-        <p className="mt-2 text-sm text-muted">OAuth only. Postara never stores a LinkedIn password.</p>
+        <p className="mt-2 text-sm text-muted">
+          OAuth only. Postara never stores a LinkedIn password. Upload{" "}
+          <a href="/logo.png" className="underline" target="_blank" rel="noreferrer">
+            logo.png
+          </a>{" "}
+          in the LinkedIn Developer app — that is the logo people see on the authorize screen.
+        </p>
         <div className="mt-4 flex items-center gap-3">
           <Badge tone={linkedin.connected ? "good" : "warn"}>
             {linkedin.connected ? `Connected${linkedin.demo ? " (demo)" : ""}` : "Not connected"}

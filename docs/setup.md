@@ -43,7 +43,7 @@ In-app copy of this path: `/tour`.
 
 | Variable | Where | Why |
 | --- | --- | --- |
-| `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | [LinkedIn Developers](https://www.linkedin.com/developers/) — create an app, enable **Sign In with LinkedIn** + **Share on LinkedIn** | OAuth only. Never a LinkedIn password |
+| `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | [LinkedIn Developers](https://www.linkedin.com/developers/) — create an app, enable **Sign In with LinkedIn** + **Share on LinkedIn**. Upload `public/logo.png` as the **app logo** (shown on the authorize screen). | OAuth only. Never a LinkedIn password |
 | `LINKEDIN_REDIRECT_URI` | `{APP_URL}/api/linkedin/callback` | Must match the LinkedIn app exactly |
 | `RESEND_API_KEY` | [resend.com](https://resend.com) | Approval emails |
 | `EMAIL_FROM` | A verified Resend from-address | `Postara <noreply@yourdomain>` |
@@ -101,7 +101,8 @@ APP_URL=https://YOUR_PROJECT.vercel.app pnpm env:vercel
 6. **Deploy**. The first build applies migrations to Supabase.
 7. After the domain is assigned, set `APP_URL` / `NEXTAUTH_URL` / `LINKEDIN_REDIRECT_URI` to the real `https://….vercel.app` (or your custom domain) and redeploy.
 8. LinkedIn app redirect URL must be exactly `{APP_URL}/api/linkedin/callback`.
-9. Sign in. Walk `/tour`.
+9. LinkedIn Developers → your app → **Auth** → upload **`public/logo.png`** as the app logo. That is the mark users see when they authorize Postara.
+10. Sign in. Walk `/tour`.
 
 Hourly Autopilot: `vercel.json` cron `0 * * * *` → `/api/cron/tick`. Vercel sends `Authorization: Bearer $CRON_SECRET`. **Hobby** allows one cron per day — change the schedule to `0 9 * * *` if you are on Hobby.
 

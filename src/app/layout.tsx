@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   title: "Postara — AI automation, starting with LinkedIn autopilot",
   description:
     "Open-source AI automation platform. Tell Postara what to post about. It researches, writes, checks risk, asks for approval when needed, and publishes to LinkedIn.",
+  applicationName: "Postara",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

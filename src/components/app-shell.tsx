@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { BrandLogo } from "@/components/brand-logo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -27,9 +28,7 @@ export function AppShell({
     <div className="grain min-h-screen">
       <header className="sticky top-0 z-20 border-b border-line/80 bg-bg/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <Link href="/dashboard" className="display text-2xl tracking-tight">
-            POSTARA
-          </Link>
+          <BrandLogo href="/dashboard" />
           <nav className="hidden items-center gap-1 md:flex">
             {links.map((link) => (
               <Link

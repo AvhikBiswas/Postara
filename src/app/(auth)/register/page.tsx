@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 import { Card, Input, Label } from "@/components/ui/input";
 
@@ -41,6 +42,7 @@ export default function RegisterPage() {
   return (
     <div className="grain flex min-h-screen items-center justify-center px-5">
       <Card className="w-full max-w-md p-8">
+        <BrandLogo className="mb-6" />
         <h1 className="display text-4xl">Create Postara</h1>
         <p className="mt-2 text-sm text-muted">Self-hosted or cloud — same account model.</p>
         <form

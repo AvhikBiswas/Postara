@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Suspense, useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 import { Card, Input, Label } from "@/components/ui/input";
 
@@ -32,6 +33,7 @@ function LoginForm() {
 
   return (
     <Card className="w-full max-w-md p-8">
+      <BrandLogo className="mb-6" />
       <h1 className="display text-4xl">Welcome back</h1>
       <p className="mt-2 text-sm text-muted">Sign in with the account you created, or register a new one.</p>
       <form

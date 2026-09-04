@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 
 const stops = [
   {
@@ -42,9 +43,7 @@ export default function TourPage() {
   return (
     <div className="grain min-h-screen">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-5 py-6">
-        <Link href="/" className="display text-3xl">
-          POSTARA
-        </Link>
+        <BrandLogo />
         <Link href="/register" className="text-sm text-muted hover:text-ink">
           Create account
         </Link>
