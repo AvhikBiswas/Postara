@@ -73,7 +73,8 @@ export function SettingsForms({
       <Card className="p-6">
         <h2 className="display text-3xl">AI keys</h2>
         <p className="mt-2 text-sm text-muted">
-          OpenRouter is the default gateway. You can also add OpenAI, Anthropic, or an OpenAI-compatible endpoint.
+          OpenRouter is the default gateway. Production default model is <code>openrouter/free</code> (OpenRouter
+          free tier). Cheap fallback: <code>google/gemini-2.5-flash-lite</code>.
         </p>
         <form
           className="mt-4 grid gap-3 sm:grid-cols-[160px_1fr_auto]"

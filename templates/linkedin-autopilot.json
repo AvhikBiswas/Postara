@@ -19,7 +19,7 @@
       "type": "llm",
       "name": "Write post",
       "config": {
-        "model": "openai/gpt-4o-mini",
+        "model": "openrouter/free",
         "system": "You are an expert LinkedIn writer. Write like an experienced software engineer. Don't sound like AI. Use practical examples.",
         "user": "Write a LinkedIn post about {{research.topic}}.\n\nResearch notes:\n{{research.notes}}"
       }

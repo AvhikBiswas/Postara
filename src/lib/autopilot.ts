@@ -1,5 +1,6 @@
 import { frequencyToCron } from "./cron";
 import type { WorkflowDefinition } from "./engine/types";
+import { defaultModel } from "./llm/models";
 
 export type AutopilotInput = {
   topics: string;
@@ -11,7 +12,7 @@ export type AutopilotInput = {
 
 export function buildAutopilotDefinition(input: AutopilotInput): WorkflowDefinition {
   const cron = frequencyToCron(input.frequency, input.time);
-  const model = input.model || process.env.DEFAULT_LLM_MODEL || "openai/gpt-4o-mini";
+  const model = input.model || defaultModel();
   const instructions =
     input.instructions.trim() ||
     "Write like an experienced software engineer.\nDon't sound like AI.\nUse practical examples.";

@@ -237,7 +237,7 @@ export function WorkflowEditor({
                         onChange={(e) =>
                           updateStep({ config: { ...selectedStep.config, model: e.target.value } })
                         }
-                        placeholder="openai/gpt-4o-mini"
+                        placeholder="openrouter/free"
                       />
                     </div>
                     <div>

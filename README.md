@@ -20,23 +20,22 @@ That workflow is just JSON. Everything else — dashboard, visual editor, AI bui
 
 ```bash
 cp .env.example .env
-# paste Supabase DATABASE_URL + DIRECT_URL, then generate secrets
 pnpm install
 pnpm db:migrate
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and create an account.
+Open [http://localhost:3000/tour](http://localhost:3000/tour) for the product walkthrough.
 
-Production (Vercel + Supabase):
+Production (Supabase + Vercel + OpenRouter free models): **[docs/setup.md](docs/setup.md)**
 
 ```bash
 APP_URL=https://YOUR_PROJECT.vercel.app pnpm env:vercel
-# paste Supabase and API keys into .env.vercel
-# import that file in Vercel → Environment Variables
+# fill DATABASE_URL, DIRECT_URL, OPENROUTER_API_KEY, ADMIN_*
+# import .env.vercel in Vercel → Environment Variables
 ```
 
-See [docs/vercel.md](docs/vercel.md), [docs/installation.md](docs/installation.md), and [docs/upgrade.md](docs/upgrade.md).
+There is one env template: `.env.example`. `pnpm env:vercel` generates the upload file.
 
 ## What V1 includes
 

@@ -23,12 +23,16 @@ export interface LLMProvider {
 
 function estimateCost(model: string, tokensIn: number, tokensOut: number) {
   const table: Record<string, { in: number; out: number }> = {
+    "openrouter/free": { in: 0, out: 0 },
+    "google/gemma-4-31b-it:free": { in: 0, out: 0 },
+    "z-ai/glm-5.2:free": { in: 0, out: 0 },
+    "minimax/minimax-m3:free": { in: 0, out: 0 },
+    "google/gemini-2.5-flash-lite": { in: 0.05, out: 0.2 },
     "openai/gpt-4o-mini": { in: 0.15, out: 0.6 },
     "openai/gpt-4o": { in: 2.5, out: 10 },
     "anthropic/claude-3.5-sonnet": { in: 3, out: 15 },
-    "google/gemini-flash-1.5": { in: 0.075, out: 0.3 },
   };
-  const rates = table[model] ?? { in: 0.15, out: 0.6 };
+  const rates = table[model] ?? (model.endsWith(":free") || model === "openrouter/free" ? { in: 0, out: 0 } : { in: 0.05, out: 0.2 });
   return (tokensIn * rates.in + tokensOut * rates.out) / 1_000_000;
 }
 

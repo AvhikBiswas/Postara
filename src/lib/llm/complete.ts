@@ -1,5 +1,6 @@
 import { classifyRisk } from "@/lib/engine/risk";
 import { interpolateString } from "@/lib/engine/interpolate";
+import { defaultModel } from "./models";
 import { resolveProvider, type LLMResponse } from "./providers";
 
 const DEMO_POSTS = [
@@ -113,7 +114,7 @@ export async function completeLLM(input: {
   apiKey?: string;
   temperature?: number;
 }): Promise<LLMResponse> {
-  const model = input.model || process.env.DEFAULT_LLM_MODEL || "openai/gpt-4o-mini";
+  const model = input.model || defaultModel();
   const system = input.system
     ? interpolateString(input.system, input.context ?? {})
     : undefined;

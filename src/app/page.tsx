@@ -45,8 +45,8 @@ export default async function HomePage() {
               <Link href="/register" className="rounded-full bg-accent px-6 py-3 text-sm text-accent-ink">
                 Start Autopilot
               </Link>
-              <Link href="/login" className="rounded-full border border-line bg-bg-elevated px-6 py-3 text-sm">
-                View the demo
+              <Link href="/tour" className="rounded-full border border-line bg-bg-elevated px-6 py-3 text-sm">
+                Product tour
               </Link>
             </div>
           </div>
